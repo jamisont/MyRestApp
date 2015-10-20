@@ -1,0 +1,9 @@
+Challenge:
+
+2 text fields: username and password (password should be hidden chars)
+press submit button and it registers you
+display the returned auth token in a label
+
+==
+
+
