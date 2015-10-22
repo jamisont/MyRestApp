@@ -23,7 +23,9 @@
     NSURLSession *urlSession = [NSURLSession sharedSession];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:5000/auth?username=%@&password=%@", self.textFieldUsername.text, self.textFieldPassword.text]];
+    
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+    
     r.HTTPMethod = @"POST";
     
     NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
