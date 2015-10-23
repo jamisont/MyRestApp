@@ -37,17 +37,16 @@
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        NSLog(@"hahaha: %d", (int)httpResponse.statusCode);
         if (httpResponse.statusCode == 200) {
             NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"got auth token: %@", authToken);
+            NSLog(@"created new user, got auth token: %@", authToken);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.labelAuthToken.text = authToken;
             });
         } else {
-            NSLog(@"i need to create a user first!");
+            NSLog(@"oh no! unrecoverable error :(");
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.labelAuthToken.text = nil;
+                self.labelAuthToken.text = @"ERROR";
             });
         }
     }];
