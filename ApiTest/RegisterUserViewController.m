@@ -1,37 +1,43 @@
 //
-//  ViewController.m
+//  RegisterUserViewController.m
 //  ApiTest
 //
-//  Created by ios on 10/20/15.
+//  Created by ios on 10/22/15.
 //  Copyright © 2015 Brandon. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "RegisterUserViewController.h"
 
-@interface ViewController ()
+@interface RegisterUserViewController ()
 
 @end
 
-@implementation ViewController
+@implementation RegisterUserViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view.
 }
 
-- (IBAction)buttonCreateUserPressed:(id)sender {
+- (IBAction)buttonPressedRegister:(id)sender {
+    
     NSURLSession *urlSession = [NSURLSession sharedSession];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:5000/auth?username=%@&password=%@", self.textFieldUsername.text, self.textFieldPassword.text]];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:5000/user"];
     
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    
     r.HTTPMethod = @"POST";
+    [r addValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    r.HTTPBody = [NSJSONSerialization dataWithJSONObject:@{
+        @"username": self.textFieldUsername.text,
+        @"password": self.textFieldPassword.text
+    } options:0 error:nil];
     
     NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
+        NSLog(@"hahaha: %d", (int)httpResponse.statusCode);
         if (httpResponse.statusCode == 200) {
             NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"got auth token: %@", authToken);
@@ -41,7 +47,7 @@
         } else {
             NSLog(@"i need to create a user first!");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSegueWithIdentifier:@"registerNewUser" sender:self];
+                self.labelAuthToken.text = nil;
             });
         }
     }];

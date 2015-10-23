@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ApiTest/ViewController.m"
-            timestampString = "467078057.2906"
+            filePath = "ApiTest/RegisterUserViewController.m"
+            timestampString = "467252527.583674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "-buttonCreateUserPressed:"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "-buttonPressedRegister:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
