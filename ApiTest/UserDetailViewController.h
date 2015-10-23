@@ -13,4 +13,11 @@
 
 @property (strong, nonatomic) User *user;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelUsername;
+
+@property (weak, nonatomic) IBOutlet UILabel *labelDeviceType;
+@property (weak, nonatomic) IBOutlet UILabel *labeliosVersion;
+@property (weak, nonatomic) IBOutlet UILabel *labelLanguage;
+@property (weak, nonatomic) IBOutlet UILabel *labelAppVersion;
+
 @end

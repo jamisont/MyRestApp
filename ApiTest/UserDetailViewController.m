@@ -16,22 +16,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.labelUsername.text = self.user.username;
+    
+    if (self.user.device) {
+        self.labelDeviceType.text = self.user.device.deviceType;
+        self.labeliosVersion.text = self.user.device.iosVersion;
+        self.labelLanguage.text = self.user.device.language;
+        self.labelAppVersion.text = self.user.device.appVersion;
+    }
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
