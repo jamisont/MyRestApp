@@ -31,7 +31,7 @@
         
         NSLog(@"created auth token: %@", authToken);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self performSegueWithIdentifier:@"unwindWithAuthToken" sender:self];
         });
         
     } failure:^{

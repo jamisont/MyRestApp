@@ -15,6 +15,10 @@
 @property (readonly, strong, nonatomic) NSString *language;
 @property (readonly, strong, nonatomic) NSString *appVersion;
 
++ (Device *)currentDeviceInfo;
+
 - (instancetype)initWithJSON:(NSDictionary *)dict;
+
+- (instancetype)initWithType:(NSString *)deviceType withIosVersion:(NSString *)iosVersion withLanguage:(NSString *)language withAppVersion:(NSString *)appVersion;
 
 @end

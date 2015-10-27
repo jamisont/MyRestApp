@@ -12,7 +12,7 @@
 @interface User : NSObject
 
 @property (readonly, strong, nonatomic) NSString *username;
-@property (readonly, strong, nonatomic) Device *device;
+@property (strong, nonatomic) Device *device;
 @property (readonly, strong, nonatomic) NSString *deviceSummary;
 
 + (NSArray<User *> *)usersFromData:(NSData *)data;

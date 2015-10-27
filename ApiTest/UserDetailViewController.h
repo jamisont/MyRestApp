@@ -13,11 +13,13 @@
 
 @property (strong, nonatomic) User *user;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelUsername;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldDeviceType;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelDeviceType;
-@property (weak, nonatomic) IBOutlet UILabel *labeliosVersion;
-@property (weak, nonatomic) IBOutlet UILabel *labelLanguage;
-@property (weak, nonatomic) IBOutlet UILabel *labelAppVersion;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldiosVersion;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldLanguage;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldAppVersion;
+@property (weak, nonatomic) IBOutlet UIButton *buttonPopulateDeviceInfo;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSaveDeviceInfo;
+@property (weak, nonatomic) IBOutlet UILabel *labelStatusMessage;
 
 @end

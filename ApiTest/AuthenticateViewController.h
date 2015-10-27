@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textFieldUsername;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldPassword;
-@property (weak, nonatomic) IBOutlet UILabel *labelAuthToken;
 @property (weak, nonatomic) IBOutlet UILabel *labelError;
 
 @end

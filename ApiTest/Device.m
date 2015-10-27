@@ -21,4 +21,23 @@
     return self;
 }
 
+- (instancetype)initWithType:(NSString *)deviceType withIosVersion:(NSString *)iosVersion withLanguage:(NSString *)language withAppVersion:(NSString *)appVersion {
+    self = [self init];
+    
+    _deviceType = deviceType;
+    _iosVersion = iosVersion;
+    _language = language;
+    _appVersion = appVersion;
+    
+    return self;
+}
+
+
++(Device *)currentDeviceInfo {
+
+    NSLog(@"Does anybody want to implement Device.currentDeviceInfo?");
+    
+    return nil;
+}
+
 @end

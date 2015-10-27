@@ -28,9 +28,7 @@
     
     ApiManager *api = [ApiManager getInstance];
     
-    if (!api.isAuthenticated) {
-        [self performSegueWithIdentifier:@"authenticate" sender:self];
-    } else {
+    if ([self checkLoggedIn]) {
         [api fetchAllUserDataWithCompletion:^(NSArray<User *> *userData){
             
             NSLog(@"got user data!");
@@ -43,6 +41,15 @@
             NSLog(@"Failed to get user data");
         }];
     }
+}
+
+- (BOOL)checkLoggedIn {
+    if (![ApiManager getInstance].isAuthenticated) {
+        [self performSegueWithIdentifier:@"authenticate" sender:self];
+        return NO;
+    }
+    
+    return YES;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -74,6 +81,14 @@
         UserDetailViewController *vc = [segue destinationViewController];
         vc.user = self.model[self.selectedIndexPath.row];
     }
+}
+
+- (IBAction)logoutPressed:(id)sender {
+    [[ApiManager getInstance] logout];
+    [self checkLoggedIn];
+}
+
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
 }
 
 @end

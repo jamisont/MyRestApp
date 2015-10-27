@@ -19,4 +19,10 @@
 
 - (void)fetchAllUserDataWithCompletion:(void (^)(NSArray<User *> *))completion failure:(void (^)(void))failure;
 
+- (void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSString *))completion failure:(void(^)(void))failure;
+
+- (void)saveDevice:(Device *)device forUser:(User *)user completion:(void(^)(void))completion failure:(void(^)(void))failure;
+
+- (void)logout;
+
 @end
