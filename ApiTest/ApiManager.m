@@ -162,6 +162,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
                 NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 // execute completion block in method call with authToken parameter
                 completion(authToken);
+                [self setAuthToken:authToken];
             }
             else // got a weird status code from server
             {
