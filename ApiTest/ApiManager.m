@@ -184,7 +184,45 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 
 #pragma mark CHALLENGE #3 - with a partner or on your own
 - (void)fetchAllUserDataWithCompletion:(void (^)(NSArray<User *> *))completion failure:(void (^)(void))failure {
+    // create an NSURL object using the address specified in API documentation
+    NSString *urlString = [NSString stringWithFormat:@"http://104.236.231.254:5000/user?auth=%@", self.authToken];
+    NSURL *url = [NSURL URLWithString:urlString];
     
+    // create a request object to load up with data to send to server
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    // set the HTTPMethod as specified in API documentation
+    request.HTTPMethod = @"GET";
+    
+    
+    // prepare to interact with a server
+    NSURLSession *urlSession = [NSURLSession sharedSession];
+    // creates HTTP request that conforms to server specifications
+    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"error is %@", error);
+        if (!error) // connected to server
+        {
+            if (((NSHTTPURLResponse *)response).statusCode == 200) // everything works OK!
+            {
+                // convert from data  to array
+                NSArray *arrayOfUsers = [User usersFromData:data];
+                completion(arrayOfUsers);
+            }
+            else // got a weird status code from server
+            {
+                // execute failure block in method call
+                failure();
+            }
+        }
+        else // had a connection problem
+        {
+            // execute failure block in method call
+            failure();
+        }
+    }];
+    
+    // sends HTTP request to server
+    [dataTask resume];
 }
 
 #pragma mark CHALLENGE #4 - with a partner or on your own

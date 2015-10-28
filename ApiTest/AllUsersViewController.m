@@ -19,16 +19,19 @@
 
 @implementation AllUsersViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
     
     ApiManager *api = [ApiManager getInstance];
     
-    if ([self checkLoggedIn]) {
+    if ([self checkLoggedIn])
+    {
         [api fetchAllUserDataWithCompletion:^(NSArray<User *> *userData){
             
             NSLog(@"got user data!");
@@ -43,8 +46,10 @@
     }
 }
 
-- (BOOL)checkLoggedIn {
-    if (![ApiManager getInstance].isAuthenticated) {
+- (BOOL)checkLoggedIn
+{
+    if (![ApiManager getInstance].isAuthenticated)
+    {
         [self performSegueWithIdentifier:@"authenticate" sender:self];
         return NO;
     }
@@ -52,14 +57,17 @@
     return YES;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return [self.model count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"userCell"];
     
-    if (!cell) {
+    if (!cell)
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"userCell"];
     }
     
@@ -71,24 +79,29 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     self.selectedIndexPath = indexPath;
     [self performSegueWithIdentifier:@"userDetail" sender:self];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([@"userDetail" isEqualToString:segue.identifier]) {
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([@"userDetail" isEqualToString:segue.identifier])
+    {
         UserDetailViewController *vc = [segue destinationViewController];
         vc.user = self.model[self.selectedIndexPath.row];
     }
 }
 
-- (IBAction)logoutPressed:(id)sender {
+- (IBAction)logoutPressed:(id)sender
+{
     [[ApiManager getInstance] logout];
     [self checkLoggedIn];
 }
 
-- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue
+{
 }
 
 @end
