@@ -8,7 +8,7 @@
 
 #import "ApiManager.h"
 
-NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
+NSString *SERVER_API_BASE_URL = @"http://104.236.231.254:5000";
 
 @interface ApiManager ()
 
@@ -46,14 +46,14 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
  * you can also add substitution values like this:
  * [self url:@"/my/path?auth%@", self.authToken], which produces 'http://myapi.com/my/path?auth=ABC123'
  */
-- (NSString *)url:(NSString *)pathFormat, ... NS_FORMAT_FUNCTION(1, 2) {
+- (NSURL *)url:(NSString *)pathFormat, ... NS_FORMAT_FUNCTION(1, 2) {
     
     va_list args;
     va_start(args, pathFormat);
     pathFormat = [[NSString alloc] initWithFormat:pathFormat arguments:args];
     va_end(args);
     
-    return [NSString stringWithFormat:@"%@%@", self.serverBase, pathFormat];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.serverBase, pathFormat]];
 }
 
 /*
@@ -88,7 +88,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     }
     
     // create an NSURL object using the address specified in API documentation
-    NSURL *url = [NSURL URLWithString:@"http://104.236.231.254:5000/user"];
+    NSURL *url = [self url:@"/user"];
     
     // create a request object to load up with data to send to server
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -138,8 +138,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 - (void)authenticateUser:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
     
     // create an NSURL object using the address specified in API documentation
-    NSString *urlString = [NSString stringWithFormat:@"http://104.236.231.254:5000/auth?username=%@&password=%@", username, password];
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSURL *url = [self url:[NSString stringWithFormat:@"/auth?username=%@&password=%@", username, password], nil];
     
     // create a request object to load up with data to send to server
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -185,8 +184,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 #pragma mark CHALLENGE #3 - with a partner or on your own
 - (void)fetchAllUserDataWithCompletion:(void (^)(NSArray<User *> *))completion failure:(void (^)(void))failure {
     // create an NSURL object using the address specified in API documentation
-    NSString *urlString = [NSString stringWithFormat:@"http://104.236.231.254:5000/user?auth=%@", self.authToken];
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSURL *url = [self url:[NSString stringWithFormat:@"/user?auth=%@", self.authToken], nil];
     
     // create a request object to load up with data to send to server
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
