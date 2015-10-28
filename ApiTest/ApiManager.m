@@ -8,6 +8,8 @@
 
 #import "ApiManager.h"
 
+NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
+
 @interface ApiManager ()
 
 @property (readonly, strong, nonatomic) NSString *serverBase;
@@ -21,9 +23,10 @@
     // the 'static' keyword causes this line to only be executed once, ever.
     static ApiManager *instance = nil;
     
+    // what is this doing?
     if (!instance) {
         NSLog(@"initializing ApiManager");
-        instance = [[ApiManager alloc] initWithServerBase:@"http://localhost:5000"];
+        instance = [[ApiManager alloc] initWithServerBase:SERVER_API_BASE_URL];
     }
     
     return instance;
@@ -38,8 +41,10 @@
 }
 
 /**
- * Use this method to make a URL that points to the right server:
- * NSString *myApiCall = [self url:@"/path/to/api"]
+ * This is a convenience method that takes a url fragment like '/path/to/something'
+ * and it makes an absolute url like 'http://myapi.com/path/to/something'
+ * you can also add substitution values like this:
+ * [self url:@"/my/path?auth%@", self.authToken], which produces 'http://myapi.com/my/path?auth=ABC123'
  */
 - (NSString *)url:(NSString *)pathFormat, ... NS_FORMAT_FUNCTION(1, 2) {
 
