@@ -56,131 +56,24 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     return [NSString stringWithFormat:@"%@%@", self.serverBase, pathFormat];
 }
 
--(void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
-    NSURLSession *urlSession = [NSURLSession sharedSession];
+#pragma mark CHALLENGE #1 - let's do this together with a projector
+- (void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
     
-    NSURL *url = [NSURL URLWithString:[self url:@"/user"]];
-    
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    r.HTTPMethod = @"POST";
-    [r addValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-    r.HTTPBody = [NSJSONSerialization dataWithJSONObject:@{
-        @"username": username,
-        @"password": password
-    } options:0 error:nil];
-    
-    NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        if (httpResponse.statusCode == 200) {
-            NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            
-            self.authToken = authToken;
-            if (completion) {
-                completion(authToken);
-            }
-        } else {
-            if (failure) {
-                failure();
-            }
-        }
-    }];
-    [task resume];
 }
 
+#pragma mark CHALLENGE #2 - with a partner
 - (void)authenticateUser:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
     
-    // TODO: remove this code so that it's empty for students -- will project
-    // this snippet in class and we can go through it together
-    
-    NSURLSession *urlSession = [NSURLSession sharedSession];
-    
-    NSURL *url = [NSURL URLWithString:[self url:@"/auth?username=%@&password=%@", username, password]];
-    
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    r.HTTPMethod = @"POST";
-    
-    NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        if (httpResponse.statusCode == 200) {
-            NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-            self.authToken = authToken;
-            if (completion) {
-                completion(authToken);
-            }
-            
-        } else {
-            if (failure) {
-                failure();
-            }
-        }
-    }];
-    [task resume];
 }
 
--(void)fetchAllUserDataWithCompletion:(void (^)(NSArray<User *> *))completion failure:(void (^)(void))failure {
-    NSURLSession *urlSession = [NSURLSession sharedSession];
+#pragma mark CHALLENGE #3 - with a partner or on your own
+- (void)fetchAllUserDataWithCompletion:(void (^)(NSArray<User *> *))completion failure:(void (^)(void))failure {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:5000/user?auth=%@", self.authToken]];
-    
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    r.HTTPMethod = @"GET";
-    
-    NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        if (httpResponse.statusCode == 200) {
-            
-            NSArray<User *> *users = [User usersFromData:data];
-            if (completion) {
-                completion(users);
-            }
-            
-        } else {
-            if (failure) {
-                failure();
-            }
-        }
-    }];
-    [task resume];
 }
 
+#pragma mark CHALLENGE #4 - with a partner or on your own
 -(void)saveDevice:(Device *)device forUser:(User *)user completion:(void (^)(void))completion failure:(void (^)(void))failure {
-    NSURLSession *urlSession = [NSURLSession sharedSession];
-    
-    NSURL *url = [NSURL URLWithString:[self url:@"/device?auth=%@", self.authToken]];
-    
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    r.HTTPMethod = @"POST";
-    [r addValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-    r.HTTPBody = [NSJSONSerialization dataWithJSONObject:@{
-        @"device_type": device.deviceType,
-        @"ios_version": device.iosVersion,
-        @"language": device.language,
-        @"app_version": device.appVersion
-    } options:0 error:nil];
-    
-    NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        if (httpResponse.statusCode == 200) {
-            user.device = device;
-            if (completion) {
-                dispatch_async(dispatch_get_main_queue(), completion);
-            }
-        } else {
-            if (failure) {
-                dispatch_async(dispatch_get_main_queue(), completion);
-            }
-        }
-    }];
-    [task resume];
+
 }
 
 -(BOOL)isAuthenticated {
