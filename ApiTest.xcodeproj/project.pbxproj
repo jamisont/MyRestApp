@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8116BB361BD9AF98000C267B /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB351BD9AF98000C267B /* RegisterUserViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB391BDA90CB000C267B /* AuthenticateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB381BDA90CB000C267B /* AuthenticateViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB3C1BDA982D000C267B /* AllUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB3B1BDA982D000C267B /* AllUsersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB3F1BDA9941000C267B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB3E1BDA9941000C267B /* ApiManager.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB471BDAABB0000C267B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB461BDAABB0000C267B /* User.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB4A1BDACFFB000C267B /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB491BDACFFB000C267B /* Device.m */; settings = {ASSET_TAGS = (); }; };
-		8116BB4D1BDAD67F000C267B /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB4C1BDAD67F000C267B /* UserDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8116BB361BD9AF98000C267B /* RegisterUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB351BD9AF98000C267B /* RegisterUserViewController.m */; };
+		8116BB391BDA90CB000C267B /* AuthenticateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB381BDA90CB000C267B /* AuthenticateViewController.m */; };
+		8116BB3C1BDA982D000C267B /* AllUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB3B1BDA982D000C267B /* AllUsersViewController.m */; };
+		8116BB3F1BDA9941000C267B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB3E1BDA9941000C267B /* ApiManager.m */; };
+		8116BB471BDAABB0000C267B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB461BDAABB0000C267B /* User.m */; };
+		8116BB4A1BDACFFB000C267B /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB491BDACFFB000C267B /* Device.m */; };
+		8116BB4D1BDAD67F000C267B /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8116BB4C1BDAD67F000C267B /* UserDetailViewController.m */; };
 		8164B3DC1BD6F8C900D312E3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8164B3DB1BD6F8C900D312E3 /* main.m */; };
 		8164B3DF1BD6F8C900D312E3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8164B3DE1BD6F8C900D312E3 /* AppDelegate.m */; };
 		8164B3E51BD6F8C900D312E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8164B3E31BD6F8C900D312E3 /* Main.storyboard */; };
@@ -101,10 +101,6 @@
 			children = (
 				8116BB3D1BDA9941000C267B /* ApiManager.h */,
 				8116BB3E1BDA9941000C267B /* ApiManager.m */,
-				8116BB481BDACFFB000C267B /* Device.h */,
-				8116BB491BDACFFB000C267B /* Device.m */,
-				8116BB451BDAABB0000C267B /* User.h */,
-				8116BB461BDAABB0000C267B /* User.m */,
 			);
 			name = api;
 			sourceTree = "<group>";
@@ -122,6 +118,17 @@
 				8116BB4C1BDAD67F000C267B /* UserDetailViewController.m */,
 			);
 			name = "view-controllers";
+			sourceTree = "<group>";
+		};
+		811B08111BE04843005CD3D9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				8116BB481BDACFFB000C267B /* Device.h */,
+				8116BB491BDACFFB000C267B /* Device.m */,
+				8116BB451BDAABB0000C267B /* User.h */,
+				8116BB461BDAABB0000C267B /* User.m */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		8164B3CE1BD6F8C900D312E3 = {
@@ -151,6 +158,7 @@
 				8164B3DE1BD6F8C900D312E3 /* AppDelegate.m */,
 				8116BB441BDA9AE2000C267B /* view-controllers */,
 				8116BB431BDA9AAE000C267B /* api */,
+				811B08111BE04843005CD3D9 /* model */,
 				8164B3E31BD6F8C900D312E3 /* Main.storyboard */,
 				8164B3E61BD6F8C900D312E3 /* Assets.xcassets */,
 				8164B3E81BD6F8C900D312E3 /* LaunchScreen.storyboard */,
