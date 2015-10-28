@@ -34,7 +34,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 
 - (instancetype)initWithServerBase:(NSString *)serverBase {
     self = [self init];
-
+    
     _serverBase = serverBase;
     
     return self;
@@ -47,7 +47,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
  * [self url:@"/my/path?auth%@", self.authToken], which produces 'http://myapi.com/my/path?auth=ABC123'
  */
 - (NSString *)url:(NSString *)pathFormat, ... NS_FORMAT_FUNCTION(1, 2) {
-
+    
     va_list args;
     va_start(args, pathFormat);
     pathFormat = [[NSString alloc] initWithFormat:pathFormat arguments:args];
@@ -56,50 +56,81 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     return [NSString stringWithFormat:@"%@%@", self.serverBase, pathFormat];
 }
 
-#pragma mark CHALLENGE #1 - let's do this together with a projector
-- (void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
-        
-    NSURLSession *urlSession = [NSURLSession sharedSession];
+/*
+ * This method takes a username and password and attempts
+ * to register a new user in the remote server.
+ * If successful, execute completion block specified in the method call (with auth token).
+ * If unsuccessful, execute failure block specified in the method call.
+ */
+- (void)registerNewUsername:(NSString *)username
+               withPassword:(NSString *)password
+                 completion:(void (^)(NSString *))completion
+                    failure:(void (^)(void))failure
+{
+    // create an empty dictionary to store info we're sending to
+    NSMutableDictionary *userDataDictionary = [[NSMutableDictionary alloc] init];
+    // add the "username" key-value pair
+    [userDataDictionary setObject:username forKey:@"username"];
+    // add the "password" key-value pair
+    [userDataDictionary setObject:password forKey:@"password"];
+    // declare a pointer to an NSError object
+    NSError *error;
+    // convert the dictionary to NSData using JSON style
+    NSData *dataToPass = [NSJSONSerialization dataWithJSONObject:userDataDictionary
+                                                         options:0
+                                                           error:&error];
+    
+    // if there was an error in converting to NSData, execute failure block and end method execution
+    if (error)
+    {
+        failure();
+        return;
+    }
+    
+    // create an NSURL object using the address specified in API documentation
     NSURL *url = [NSURL URLWithString:@"http://104.236.231.254:5000/user"];
     
+    // create a request object to load up with data to send to server
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    // set the HTTPMethod as specified in API documentation
     request.HTTPMethod = @"POST";
     
-    NSMutableDictionary *userDataDictionary = [[NSMutableDictionary alloc] init];
-    [userDataDictionary setObject:username forKey:@"username"];
-    [userDataDictionary setObject:password forKey:@"password"];
-    NSError *error;
-    NSData *dataToPass = [NSJSONSerialization dataWithJSONObject:userDataDictionary options:0 error:&error];
+    // set the HTTPBody as specified in the API documentation
     request.HTTPBody = dataToPass;
     
+    // set the header as specified in the API documentation
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-    {
-        if (error)
+    // prepare to interact with a server
+    NSURLSession *urlSession = [NSURLSession sharedSession];
+    // creates HTTP request that conforms to server specifications
+    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"error is %@", error);
+        if (!error) // connected to server
         {
-            NSLog(@"There was an error with response %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-            failure();
-        }
-        else
-        {
-            NSLog(@"Success with response %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-            if (((NSHTTPURLResponse *)response).statusCode == 200)
+            if (((NSHTTPURLResponse *)response).statusCode == 200) // everything works OK!
             {
+                // convert data from server to auth token (as described in API documentation)
                 NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                // execute completion block in method call with authToken parameter
                 completion(authToken);
             }
-            else
+            else // got a weird status code from server
             {
+                // execute failure block in method call
                 failure();
             }
         }
+        else // had a connection problem
+        {
+            // execute failure block in method call
+            failure();
+        }
     }];
     
+    // sends HTTP request to server
     [dataTask resume];
-
-    
-    // what needs to happen next?
 }
 
 #pragma mark CHALLENGE #2 - with a partner
@@ -114,7 +145,7 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 
 #pragma mark CHALLENGE #4 - with a partner or on your own
 -(void)saveDevice:(Device *)device forUser:(User *)user completion:(void (^)(void))completion failure:(void (^)(void))failure {
-
+    
 }
 
 -(BOOL)isAuthenticated {
